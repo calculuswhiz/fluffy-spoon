@@ -1,3 +1,4 @@
+# Run with: "python original_script.py"
 from math import *
 
 def quadform(a, b, c):
