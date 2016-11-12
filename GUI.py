@@ -4,9 +4,19 @@ import sys
 from subprocess import call, Popen, PIPE
 from math import *
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (QWidget, QApplication,
-        QGridLayout, QShortcut,
+        QGridLayout, QMainWindow, QStatusBar,
         QLabel, QButtonGroup, QPushButton, QRadioButton, QLineEdit, QSpinBox)
+
+'''
+Bonus to Gameconquerors:
+See PowerAngleCircle.as for reference. Allow first turn shot display:
+::push bunch of properties; pushbyte 0; ifne ofs0056;
+66 8d 3c 24 00 14 10 00 00
+::let it push properties; pop; nop; jmp ofs0056
+66 8d 3c 29 02 10 10 00 00
+'''
 
 def rad(angleD):
     return angleD*pi/180
@@ -25,12 +35,36 @@ def quadform(a, b, c):
     sqf = sqrt(rad)
     return [(-b+sqf)/(2*a),(-b-sqf)/(2*a)]
 
+class MW(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.initwin()
+        self.assistant = AimAssist()
+        self.setCentralWidget(self.assistant)
+        self.show()
+        
+    def initwin(self):
+        # First turn estimator:
+        ftemap = QPixmap("./estimator.png")
+        ftelabel = QLabel()
+        ftelabel.setPixmap(ftemap)
+        self.statusBar().addWidget(ftelabel)
+        ftelabel.setAlignment(Qt.AlignBottom)
+        
+        self.move(50, 50)
+        # self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowTitle('Aim Assistant')
+        
+    def keyPressEvent(self, e):
+        if e.key() == Qt.Key_Escape or e.key() == Qt.Key_Q:
+            self.close()
+
 class AimAssist(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
         
-    def initUI(self):      
+    def initUI(self):    
         # Buttons:
         BTN_H = 20
         BTN_W = 80
@@ -49,6 +83,9 @@ class AimAssist(QWidget):
         calc = QPushButton("&Calc", self)
         calc.clicked.connect(self.solve_tank)
         grid.addWidget(calc, 1, BUTTON_COL)
+        rstb = QPushButton("&Invert", self)
+        rstb.clicked.connect(self.invert)
+        grid.addWidget(rstb, 2, BUTTON_COL)
         
         # Radio buttons:
         settings = QLabel("Shot Type:")
@@ -59,8 +96,10 @@ class AimAssist(QWidget):
         grid.addWidget(self.radNorm, 1, RADIO_COL)
         self.radHover = QRadioButton("&Hover (Post hang only)")
         grid.addWidget(self.radHover, 2, RADIO_COL)
-        self.radDig = QRadioButton("&Digger")
+        self.radDig = QRadioButton("&Tunneler")
         grid.addWidget(self.radDig, 3, RADIO_COL)
+        self.radBoom = QRadioButton("&Boomerang")
+        grid.addWidget(self.radBoom, 4, RADIO_COL)
         
         # Text areas (with labels):
         # Width
@@ -93,6 +132,7 @@ class AimAssist(QWidget):
         self.anglebox.setMaximum(359)
         self.anglebox.setMinimum(0)
         self.anglebox.setValue(45)
+        self.anglebox.setSingleStep(1)
         self.anglebox.setWrapping(True)
         angleLabel = QLabel("<i>θ</i>(0-259):")
         grid.addWidget(angleLabel, 3, LABEL_COL1)
@@ -101,14 +141,11 @@ class AimAssist(QWidget):
         # Power out:
         self.vbox = QLineEdit("Power")
         self.vbox.setStyleSheet("color: #ff0000")
-        grid.addWidget(self.vbox, 2, BUTTON_COL)
+        grid.addWidget(self.vbox, 3, BUTTON_COL)
         self.vbox.setAlignment(Qt.AlignRight)
         self.vbox.setReadOnly(True)
         
-        self.move(50, 50)
-        self.setWindowTitle('Aim Assistant')
         self.show()
-        # self.setWindowFlags(Qt.WindowStaysOnTopHint)
         
     def setWH(self, rectw, recth):
         self.wbox.setValue(int(rectw))
@@ -119,20 +156,19 @@ class AimAssist(QWidget):
         self.lower()
         pair = Popen(["./deathmeasure"], stdout=PIPE).communicate()[0].decode('utf-8').split()
         self.setWH(pair[0], pair[1])
-        # self.show()
-        # self.setWindowFlags(Qt.WindowStaysOnTopHint)
         
-    def keyPressEvent(self, e):
-        if e.key() == Qt.Key_Escape or e.key() == Qt.Key_Q:
-            self.close()
-        # elif e.key() == Qt.Key_A:
-        #     self.drawRect()
-        
+    def invert(self):
+        # self.radNorm.setChecked(True)
+        self.windbox.setValue(-self.windbox.value())
+    
     def solve_tank(self):
         # Earth:
         gc = 9.529745042492918
         wf = 0.08173443651742651    # wind
-        hc = 3.660218073939021      # hover
+        # hover:
+        hc = 3.660218073939021*int(self.radHover.isChecked())
+        # boomer:
+        bc = 0.07690605021520115*int(self.radBoom.isChecked())
         
         v_0 = None
         
@@ -144,7 +180,7 @@ class AimAssist(QWidget):
             dy = -dy
         theta = rad(theta)
         w = self.windbox.value()
-        hang = int(self.radHover.isChecked())
+        # hang = int(self.radHover.isChecked())
             
         flags = ""
         
@@ -152,19 +188,22 @@ class AimAssist(QWidget):
         # x=v_0*cos(theta)*t
         # Other x terms:
         #   Hover:     hc*v_0*cos(theta)
-        #   Wind:      wf*w*(t**2)  <-- forgot if it was t^2 or just t
+        #   Wind:      .5*wf*w*(t**2)
+        #   Boomer:    -.5*bc*v_0*cos(theta)*(t**2)
+        
         # y=v_0*sin(theta)*t-1/2*gc*(t**2)
         if v_0 is None:
-            diff = 50
+            diff = 20
             vat = -1
             for n in range(1,111):
                 t = quadform(gc/2, -n*sin(theta), dy)[0]
                 # if t<0:
                 #     continue
-                x = n*cos(theta)*t + .5*wf*w*t**2 + hang*hc*n*cos(theta)
+                x = n*cos(theta)*t + .5*wf*w*t**2 + hc*n*cos(theta) - .5*bc*n*cos(theta)*t**2
                 # print(fabs(x-dx))
                 if fabs(x-dx) < fabs(diff):
-                    print(str(n)+":\t", round(x), round(dx), round(fabs(dx-x)))
+                    # Debug:
+                    # print(str(n)+":\t", round(x), round(dx), round(fabs(dx-x)))
                     diff = dx-x
                     vat = n
             catstr = ""
@@ -180,7 +219,9 @@ class AimAssist(QWidget):
             print("Error. Broken.")
             self.vbox.setText(str(-1.0))
         
+        # self.radNorm.setChecked(True)
+        
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = AimAssist()
+    Mainwin = MW()
     sys.exit(app.exec_())
