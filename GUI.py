@@ -13,9 +13,9 @@ from PyQt5.QtWidgets import (QWidget, QApplication,
 Bonus to Gameconquerors:
 See PowerAngleCircle.as for reference. Allow first turn shot display:
 ::push bunch of properties; pushbyte 0; ifne ofs0056;
-66 8d 3c 24 00 14 10 00 00
-::let it push properties; pop; nop; jmp ofs0056
-66 8d 3c 29 02 10 10 00 00
+07 28 90 24 00 14 10 00 00
+turn -1?
+07 28 90 24 ff 14 10 00 00
 '''
 
 def rad(angleD):
@@ -162,22 +162,31 @@ class AimAssist(QWidget):
         self.windbox.setValue(-self.windbox.value())
     
     def solve_tank(self):
+        # Sanity check.
+        shotstring=""
+
         # Earth:
         gc = 9.529745042492918
         wf = 0.08173443651742651    # wind
         # hover:
         hc = 3.660218073939021*int(self.radHover.isChecked())
+        if(hc!=0):
+            shotstring = "(HOVER)"
         # boomer:
         bc = 0.07690605021520115*int(self.radBoom.isChecked())
+        if(bc!=0):
+            shotstring = "(BOOMERANG)"
         
         v_0 = None
         
+
         dx = self.wbox.value()
         dy = self.hbox.value()
         theta = self.anglebox.value()
         if self.radDig.isChecked():
             theta = -theta+360
             dy = -dy
+            shotstring="(TUNNELER)"
         theta = rad(theta)
         w = self.windbox.value()
         # hang = int(self.radHover.isChecked())
@@ -213,7 +222,7 @@ class AimAssist(QWidget):
             if vat<0:
                 call(["notify-send", "Error:", "Bad Value"])
             else:
-                call(["notify-send", "Power:", str(round(vat,0))+catstr])
+                call(["notify-send", "Power:", str(round(vat,0))+catstr+" "+shotstring])
                 
         else:
             print("Error. Broken.")
@@ -222,6 +231,8 @@ class AimAssist(QWidget):
         # self.radNorm.setChecked(True)
         
 if __name__ == '__main__':
+    # gcproc = Popen(["gameconqueror"])
+    call(["gameconqueror"])
     app = QApplication(sys.argv)
     Mainwin = MW()
     sys.exit(app.exec_())
