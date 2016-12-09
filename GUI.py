@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+from macromanx import Mouse
+
 import sys
 from subprocess import call, Popen, PIPE
 from math import *
@@ -134,14 +136,14 @@ class AimAssist(QWidget):
         self.anglebox.setValue(45)
         self.anglebox.setSingleStep(1)
         self.anglebox.setWrapping(True)
-        angleLabel = QLabel("<i>θ</i>(0-259):")
+        angleLabel = QLabel("<i>θ</i>(0-359):")
         grid.addWidget(angleLabel, 3, LABEL_COL1)
         angleLabel.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         
         # Power out:
         self.vbox = QLineEdit("Power")
         self.vbox.setStyleSheet("color: #ff0000")
-        grid.addWidget(self.vbox, 3, BUTTON_COL)
+        grid.addWidget(self.vbox, 4, BUTTON_COL)
         self.vbox.setAlignment(Qt.AlignRight)
         self.vbox.setReadOnly(True)
         
@@ -232,7 +234,7 @@ class AimAssist(QWidget):
         
 if __name__ == '__main__':
     # gcproc = Popen(["gameconqueror"])
-    call(["gameconqueror"])
+    # call(["gameconqueror"])
     app = QApplication(sys.argv)
     Mainwin = MW()
     sys.exit(app.exec_())
