@@ -1,159 +1,159 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
+import sys
+from subprocess import call, Popen, PIPE
+from math import *
+from PyQt5 import uic, QtCore
+from PyQt5.QtCore import Qt, QObject, pyqtSignal
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import (QWidget, QApplication,
+        QGridLayout, QMainWindow, QStatusBar,
+        QLabel, QButtonGroup, QPushButton, QRadioButton, QLineEdit, QSpinBox)
 
-# Form implementation generated from reading ui file 'RetoolGUI.ui'
-#
-# Created by: PyQt5 UI code generator 5.7
-#
-# WARNING! All changes made in this file will be lost!
+import Xlib
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+import RetoolGUI
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(650, 224)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
-        MainWindow.setSizePolicy(sizePolicy)
-        MainWindow.setMinimumSize(QtCore.QSize(15, 0))
-        MainWindow.setUnifiedTitleAndToolBarOnMac(False)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
-        self.layoutWidget.setGeometry(QtCore.QRect(10, 0, 631, 191))
-        self.layoutWidget.setObjectName("layoutWidget")
-        self.gridLayout = QtWidgets.QGridLayout(self.layoutWidget)
-        self.gridLayout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout.setObjectName("gridLayout")
-        self.label_3 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_3.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.label_3.setObjectName("label_3")
-        self.gridLayout.addWidget(self.label_3, 1, 3, 1, 1)
-        self.radHover = QtWidgets.QRadioButton(self.layoutWidget)
-        self.radHover.setObjectName("radHover")
-        self.gridLayout.addWidget(self.radHover, 2, 5, 1, 1)
-        self.label_2 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.label_2.setObjectName("label_2")
-        self.gridLayout.addWidget(self.label_2, 0, 3, 1, 1)
-        self.label_4 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_4.setObjectName("label_4")
-        self.gridLayout.addWidget(self.label_4, 0, 5, 1, 1)
-        self.wbox = QtWidgets.QSpinBox(self.layoutWidget)
-        self.wbox.setMinimum(-1000)
-        self.wbox.setMaximum(1000)
-        self.wbox.setObjectName("wbox")
-        self.gridLayout.addWidget(self.wbox, 2, 4, 1, 1)
-        self.radNorm = QtWidgets.QRadioButton(self.layoutWidget)
-        self.radNorm.setChecked(True)
-        self.radNorm.setObjectName("radNorm")
-        self.gridLayout.addWidget(self.radNorm, 1, 5, 1, 1)
-        self.label_7 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_7.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
-        self.label_7.setObjectName("label_7")
-        self.gridLayout.addWidget(self.label_7, 1, 2, 1, 1)
-        self.label = QtWidgets.QLabel(self.layoutWidget)
-        self.label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.label.setObjectName("label")
-        self.gridLayout.addWidget(self.label, 2, 3, 1, 1)
-        self.selfybox = QtWidgets.QSpinBox(self.layoutWidget)
-        self.selfybox.setMaximum(99999)
-        self.selfybox.setObjectName("selfybox")
-        self.gridLayout.addWidget(self.selfybox, 2, 2, 1, 1)
-        self.hbox = QtWidgets.QSpinBox(self.layoutWidget)
-        self.hbox.setMinimum(-1000)
-        self.hbox.setMaximum(1000)
-        self.hbox.setObjectName("hbox")
-        self.gridLayout.addWidget(self.hbox, 3, 4, 1, 1)
-        self.self_btn = QtWidgets.QPushButton(self.layoutWidget)
-        self.self_btn.setObjectName("self_btn")
-        self.gridLayout.addWidget(self.self_btn, 2, 0, 1, 1)
-        self.label_6 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_6.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
-        self.label_6.setObjectName("label_6")
-        self.gridLayout.addWidget(self.label_6, 1, 1, 1, 1)
-        self.recalc_btn = QtWidgets.QPushButton(self.layoutWidget)
-        self.recalc_btn.setObjectName("recalc_btn")
-        self.gridLayout.addWidget(self.recalc_btn, 0, 0, 1, 1)
-        self.windbox = QtWidgets.QSpinBox(self.layoutWidget)
-        self.windbox.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
-        self.windbox.setWrapping(True)
-        self.windbox.setAccelerated(False)
-        self.windbox.setMinimum(-30)
-        self.windbox.setMaximum(30)
-        self.windbox.setObjectName("windbox")
-        self.gridLayout.addWidget(self.windbox, 0, 4, 1, 1)
-        self.targetxbox = QtWidgets.QSpinBox(self.layoutWidget)
-        self.targetxbox.setReadOnly(True)
-        self.targetxbox.setMaximum(99999)
-        self.targetxbox.setObjectName("targetxbox")
-        self.gridLayout.addWidget(self.targetxbox, 3, 1, 1, 1)
-        self.targetybox = QtWidgets.QSpinBox(self.layoutWidget)
-        self.targetybox.setMaximum(99999)
-        self.targetybox.setObjectName("targetybox")
-        self.gridLayout.addWidget(self.targetybox, 3, 2, 1, 1)
-        self.radBoom = QtWidgets.QRadioButton(self.layoutWidget)
-        self.radBoom.setObjectName("radBoom")
-        self.gridLayout.addWidget(self.radBoom, 4, 5, 1, 1)
-        self.label_5 = QtWidgets.QLabel(self.layoutWidget)
-        self.label_5.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.label_5.setObjectName("label_5")
-        self.gridLayout.addWidget(self.label_5, 3, 3, 1, 1)
-        self.vbox = QtWidgets.QLineEdit(self.layoutWidget)
-        self.vbox.setStyleSheet("color: rgb(255, 0, 0)")
-        self.vbox.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
-        self.vbox.setReadOnly(True)
-        self.vbox.setObjectName("vbox")
-        self.gridLayout.addWidget(self.vbox, 4, 0, 1, 1)
-        self.flipwind_btn = QtWidgets.QPushButton(self.layoutWidget)
-        self.flipwind_btn.setObjectName("flipwind_btn")
-        self.gridLayout.addWidget(self.flipwind_btn, 1, 0, 1, 1)
-        self.radDig = QtWidgets.QRadioButton(self.layoutWidget)
-        self.radDig.setObjectName("radDig")
-        self.gridLayout.addWidget(self.radDig, 3, 5, 1, 1)
-        self.target_btn = QtWidgets.QPushButton(self.layoutWidget)
-        self.target_btn.setObjectName("target_btn")
-        self.gridLayout.addWidget(self.target_btn, 3, 0, 1, 1)
-        self.selfxbox = QtWidgets.QSpinBox(self.layoutWidget)
-        self.selfxbox.setReadOnly(True)
-        self.selfxbox.setMaximum(99999)
-        self.selfxbox.setObjectName("selfxbox")
-        self.gridLayout.addWidget(self.selfxbox, 2, 1, 1, 1)
-        self.anglebox = QtWidgets.QSpinBox(self.layoutWidget)
-        self.anglebox.setWrapping(True)
-        self.anglebox.setMaximum(359)
-        self.anglebox.setSingleStep(1)
-        self.anglebox.setProperty("value", 45)
-        self.anglebox.setObjectName("anglebox")
-        self.gridLayout.addWidget(self.anglebox, 1, 4, 1, 1)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.actionExit = QtWidgets.QAction(MainWindow)
-        self.actionExit.setObjectName("actionExit")
+def rad(angleD):
+    return angleD*pi/180
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+def deg(angleR):
+    return angleR*180/pi
 
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Aim Assistant v2"))
-        self.label_3.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-style:italic;\">θ</span>(0-359):</p></body></html>"))
-        self.radHover.setText(_translate("MainWindow", "Hover (Post hang only)"))
-        self.label_2.setText(_translate("MainWindow", "Wind:"))
-        self.label_4.setText(_translate("MainWindow", "Shot Type:"))
-        self.radNorm.setText(_translate("MainWindow", "&Normal"))
-        self.label_7.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">y</span></p></body></html>"))
-        self.label.setText(_translate("MainWindow", "Width:"))
-        self.self_btn.setText(_translate("MainWindow", "&Self pos"))
-        self.label_6.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">x</span></p></body></html>"))
-        self.recalc_btn.setText(_translate("MainWindow", "&Recalculate"))
-        self.radBoom.setText(_translate("MainWindow", "Boomerang"))
-        self.label_5.setText(_translate("MainWindow", "Height:"))
-        self.vbox.setPlaceholderText(_translate("MainWindow", "Power"))
-        self.flipwind_btn.setText(_translate("MainWindow", "&Invert Wind"))
-        self.radDig.setText(_translate("MainWindow", "Tunneler"))
-        self.target_btn.setText(_translate("MainWindow", "&Target Pos"))
-        self.actionExit.setText(_translate("MainWindow", "Exit"))
+def cot(theta):
+    return 1/tan(theta)
 
+def quadform(a, b, c):
+    # Quadratic formula
+    rad = b*b-4*a*c
+    if rad<0 or a==0:
+        return [-1, -1]
+    sqf = sqrt(rad)
+    return [(-b+sqf)/(2*a),(-b-sqf)/(2*a)]
+
+# pyuic5 RetoolGUI.ui -o GUIv2.py
+
+'''
+Bonus to Gameconquerors:
+See PowerAngleCircle.as for reference. Allow first turn shot display:
+::push bunch of properties; pushbyte 0; ifne ofs0056;
+07 28 90 24 00 14 10 00 00
+turn -1?
+07 28 90 24 aa 14 10 00 00
+'''
+
+class MW(QMainWindow, RetoolGUI.Ui_MainWindow):
+    def __init__(self, parent=None):
+        super(MW, self).__init__(parent)
+        self.setupUi(self)
+        self.initwin()
+
+    def initwin(self):
+        # First turn estimator:
+        ftemap = QPixmap("./estimator.png")
+        ftelabel = QLabel()
+        ftelabel.setPixmap(ftemap)
+        self.statusBar().addWidget(ftelabel)
+        ftelabel.setAlignment(Qt.AlignBottom)
+        
+        self.move(50, 50)
+
+        self.acq_btn.clicked.connect(self.drawRect)
+        self.calc_btn.clicked.connect(self.solve_tank)
+        self.flipwind_btn.clicked.connect(self.invert)
+        
+    def setWH(self, rectw, recth):
+        self.wbox.setValue(int(rectw))
+        self.hbox.setValue(int(recth))
+        self.solve_tank()
+    
+    def drawRect(self):
+        self.lower()
+        pair = Popen(["./deathmeasure"], stdout=PIPE).communicate()[0].decode('utf-8').split()
+        self.setWH(pair[0], pair[1])
+
+    def invert(self):
+        # self.radNorm.setChecked(True)
+        self.windbox.setValue(-self.windbox.value())
+
+    def solve_tank(self):
+        # Sanity check.
+        shotstring=""
+
+        # Earth:
+        gc = 9.529745042492918
+        wf = 0.08173443651742651    # wind
+        # hover:
+        if(self.radHover.isChecked()):
+            hc = 3.660218073939021
+        hc = 7.313616408030493*int(self.radBigHover.isChecked())
+        if(hc!=0):
+            shotstring = "(HOVER)"
+        # boomer:
+        bc = 0.07690605021520115*int(self.radBoom.isChecked())
+        if(bc!=0):
+            shotstring = "(BOOMERANG)"
+        
+        v_0 = None
+        
+
+        dx = self.wbox.value()
+        dy = self.hbox.value()
+        theta = self.anglebox.value()
+        if self.radDig.isChecked():
+            theta = -theta+360
+            dy = -dy
+            shotstring="(TUNNELER)"
+        theta = rad(theta)
+        w = self.windbox.value()
+        # hang = int(self.radHover.isChecked())
+            
+        flags = ""
+        
+        # Solve these equations:
+        # x=v_0*cos(theta)*t
+        # Other x terms:
+        #   Hover:     hc*v_0*cos(theta)
+        #   Wind:      .5*wf*w*(t**2)
+        #   Boomer:    -.5*bc*v_0*cos(theta)*(t**2)
+        
+        # y=v_0*sin(theta)*t-1/2*gc*(t**2)
+        if v_0 is None:
+            diffx = 20
+            vat = -1
+            for n in range(1,111):
+                t = quadform(gc/2, -n*sin(theta), dy)[0]
+                # if t<0:
+                #     continue
+                x = n*cos(theta)*t + .5*wf*w*t**2 + hc*n*cos(theta) - .5*bc*n*cos(theta)*t**2
+                # print(fabs(x-dx))
+                if fabs(x-dx) < fabs(diffx):
+                    # Debug:
+                    # print(str(n)+":\t", round(x), round(dx), round(fabs(dx-x)))
+                    diffx = dx-x
+                    vat = n
+            catstr = ""
+            if(vat > 100 or diffx > 5):
+                catstr = "!"
+            self.vbox.setText(catstr + str(round(vat,0))+","+str(round(diffx,1))+"px" + catstr)
+            if vat<0:
+                call(["notify-send", "Error:", "Bad Value"])
+            else:
+                call(["notify-send", "Power:", str(round(vat,0))+catstr+" "+shotstring])
+                
+        else:
+            print("Error. Broken.")
+            self.vbox.setText(str(-1.0))
+
+    def keyPressEvent(self, e):
+        if e.key() == Qt.Key_Escape or e.key() == Qt.Key_Q:
+            self.close()
+
+if __name__ == '__main__':
+    # gcproc = Popen(["gameconqueror"])
+    call(["gameconqueror"])
+    app = QApplication(sys.argv)
+    Mainwin = MW()
+    Mainwin.show()
+    
+    sys.exit(app.exec_())

@@ -78,8 +78,9 @@ ry = y < rooty ? y : rooty
             case ButtonRelease:
                 if (drawn)
                 {
-                  XDrawRectangle (display, root, gc, rx, ry, rw, rh);
-                  drawn = 0;
+                    // fprintf(stderr, "%d, %d, %d, %d\n", x, y, rx, ry);
+                    XDrawRectangle (display, root, gc, rx, ry, rw, rh);
+                    drawn = 0;
                 }
                 XFlush (display);
                 /* record the final location */

@@ -172,6 +172,7 @@ class AimAssist(QWidget):
         wf = 0.08173443651742651    # wind
         # hover:
         hc = 3.660218073939021*int(self.radHover.isChecked())
+        # hc = 7.313616408030493*int(self.radHover.isChecked())     # <<= heavy hover
         if(hc!=0):
             shotstring = "(HOVER)"
         # boomer:
@@ -234,7 +235,7 @@ class AimAssist(QWidget):
         
 if __name__ == '__main__':
     # gcproc = Popen(["gameconqueror"])
-    # call(["gameconqueror"])
+    call(["gameconqueror"])
     app = QApplication(sys.argv)
     Mainwin = MW()
     sys.exit(app.exec_())

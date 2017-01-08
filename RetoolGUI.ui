@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>650</width>
-    <height>224</height>
+    <width>634</width>
+    <height>255</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -33,60 +33,16 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>0</y>
-      <width>631</width>
-      <height>191</height>
+      <y>10</y>
+      <width>531</width>
+      <height>220</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetMinimumSize</enum>
      </property>
-     <item row="1" column="3">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;θ&lt;/span&gt;(0-359):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="5">
-      <widget class="QRadioButton" name="radHover">
-       <property name="text">
-        <string>Hover (Post hang only)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Wind:</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>Shot Type:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="4">
-      <widget class="QSpinBox" name="wbox">
-       <property name="minimum">
-        <number>-1000</number>
-       </property>
-       <property name="maximum">
-        <number>1000</number>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="5">
+     <item row="2" column="3">
       <widget class="QRadioButton" name="radNorm">
        <property name="text">
         <string>&amp;Normal</string>
@@ -96,35 +52,85 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;y&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <item row="7" column="0">
+      <widget class="QLineEdit" name="vbox">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(255, 0, 0)</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="placeholderText">
+        <string>Power</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="3">
-      <widget class="QLabel" name="label">
+     <item row="1" column="3">
+      <widget class="QLabel" name="label_4">
        <property name="text">
-        <string>Width:</string>
+        <string>Shot Type:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3">
+      <widget class="QRadioButton" name="radHover">
+       <property name="text">
+        <string>&amp;Hover (Post hang only)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="acq_btn">
+       <property name="text">
+        <string>&amp;ACK</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;θ&lt;/span&gt;(0-359):&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
-      <widget class="QSpinBox" name="selfybox">
-       <property name="maximum">
-        <number>99999</number>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="calc_btn">
+       <property name="text">
+        <string>&amp;Calc</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="4">
-      <widget class="QSpinBox" name="hbox">
+     <item row="3" column="0">
+      <widget class="QPushButton" name="flipwind_btn">
+       <property name="text">
+        <string>&amp;Invert Wind</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QSpinBox" name="anglebox">
+       <property name="wrapping">
+        <bool>true</bool>
+       </property>
+       <property name="maximum">
+        <number>359</number>
+       </property>
+       <property name="singleStep">
+        <number>1</number>
+       </property>
+       <property name="value">
+        <number>45</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QSpinBox" name="wbox">
        <property name="minimum">
         <number>-1000</number>
        </property>
@@ -133,31 +139,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QPushButton" name="self_btn">
-       <property name="text">
-        <string>&amp;Self pos</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;x&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QPushButton" name="recalc_btn">
-       <property name="text">
-        <string>&amp;Recalculate</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
+     <item row="3" column="2">
       <widget class="QSpinBox" name="windbox">
        <property name="cursor">
         <cursorShape>ArrowCursor</cursorShape>
@@ -176,31 +158,34 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QSpinBox" name="targetxbox">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-       <property name="maximum">
-        <number>99999</number>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QSpinBox" name="targetybox">
-       <property name="maximum">
-        <number>99999</number>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="5">
+     <item row="9" column="3">
       <widget class="QRadioButton" name="radBoom">
        <property name="text">
-        <string>Boomerang</string>
+        <string>&amp;Boomerang</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="3">
+     <item row="3" column="1">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Wind:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QSpinBox" name="hbox">
+       <property name="minimum">
+        <number>-1000</number>
+       </property>
+       <property name="maximum">
+        <number>1000</number>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
       <widget class="QLabel" name="label_5">
        <property name="text">
         <string>Height:</string>
@@ -210,66 +195,40 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QLineEdit" name="vbox">
-       <property name="styleSheet">
-        <string notr="true">color: rgb(255, 0, 0)</string>
+     <item row="1" column="1">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Width:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-       <property name="placeholderText">
-        <string>Power</string>
-       </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QPushButton" name="flipwind_btn">
+     <item row="5" column="3">
+      <widget class="QRadioButton" name="radBigHover">
        <property name="text">
-        <string>&amp;Invert Wind</string>
+        <string>&amp;Big Hover</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="5">
+     <item row="7" column="3">
       <widget class="QRadioButton" name="radDig">
        <property name="text">
-        <string>Tunneler</string>
+        <string>&amp;Tunneler</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QPushButton" name="target_btn">
+     <item row="9" column="0" colspan="2">
+      <widget class="QLineEdit" name="lineEdit">
+       <property name="styleSheet">
+        <string notr="true">color:rgb(85, 87, 83)</string>
+       </property>
        <property name="text">
-        <string>&amp;Target Pos</string>
+        <string>07 28 90 24 00 14 10 00 00</string>
        </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QSpinBox" name="selfxbox">
        <property name="readOnly">
         <bool>true</bool>
-       </property>
-       <property name="maximum">
-        <number>99999</number>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="4">
-      <widget class="QSpinBox" name="anglebox">
-       <property name="wrapping">
-        <bool>true</bool>
-       </property>
-       <property name="maximum">
-        <number>359</number>
-       </property>
-       <property name="singleStep">
-        <number>1</number>
-       </property>
-       <property name="value">
-        <number>45</number>
        </property>
       </widget>
      </item>

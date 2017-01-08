@@ -1,175 +1,137 @@
-#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-from macromanx import Mouse, Keyboard, Winman, Aux
 
-import sys
-from subprocess import call, Popen, PIPE
-from math import *
-from PyQt5 import uic
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import (QWidget, QApplication,
-        QGridLayout, QMainWindow, QStatusBar,
-        QLabel, QButtonGroup, QPushButton, QRadioButton, QLineEdit, QSpinBox)
+# Form implementation generated from reading ui file 'RetoolGUI.ui'
+#
+# Created by: PyQt5 UI code generator 5.7
+#
+# WARNING! All changes made in this file will be lost!
 
-import GUIv2
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-def rad(angleD):
-    return angleD*pi/180
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(634, 255)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMinimumSize(QtCore.QSize(15, 0))
+        MainWindow.setUnifiedTitleAndToolBarOnMac(False)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.layoutWidget.setGeometry(QtCore.QRect(10, 10, 531, 220))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.gridLayout = QtWidgets.QGridLayout(self.layoutWidget)
+        self.gridLayout.setSizeConstraint(QtWidgets.QLayout.SetMinimumSize)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setObjectName("gridLayout")
+        self.radNorm = QtWidgets.QRadioButton(self.layoutWidget)
+        self.radNorm.setChecked(True)
+        self.radNorm.setObjectName("radNorm")
+        self.gridLayout.addWidget(self.radNorm, 2, 3, 1, 1)
+        self.vbox = QtWidgets.QLineEdit(self.layoutWidget)
+        self.vbox.setStyleSheet("color: rgb(255, 0, 0)")
+        self.vbox.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.vbox.setReadOnly(True)
+        self.vbox.setObjectName("vbox")
+        self.gridLayout.addWidget(self.vbox, 7, 0, 1, 1)
+        self.label_4 = QtWidgets.QLabel(self.layoutWidget)
+        self.label_4.setObjectName("label_4")
+        self.gridLayout.addWidget(self.label_4, 1, 3, 1, 1)
+        self.radHover = QtWidgets.QRadioButton(self.layoutWidget)
+        self.radHover.setObjectName("radHover")
+        self.gridLayout.addWidget(self.radHover, 3, 3, 1, 1)
+        self.acq_btn = QtWidgets.QPushButton(self.layoutWidget)
+        self.acq_btn.setObjectName("acq_btn")
+        self.gridLayout.addWidget(self.acq_btn, 1, 0, 1, 1)
+        self.label_3 = QtWidgets.QLabel(self.layoutWidget)
+        self.label_3.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_3.setObjectName("label_3")
+        self.gridLayout.addWidget(self.label_3, 5, 1, 1, 1)
+        self.calc_btn = QtWidgets.QPushButton(self.layoutWidget)
+        self.calc_btn.setObjectName("calc_btn")
+        self.gridLayout.addWidget(self.calc_btn, 2, 0, 1, 1)
+        self.flipwind_btn = QtWidgets.QPushButton(self.layoutWidget)
+        self.flipwind_btn.setObjectName("flipwind_btn")
+        self.gridLayout.addWidget(self.flipwind_btn, 3, 0, 1, 1)
+        self.anglebox = QtWidgets.QSpinBox(self.layoutWidget)
+        self.anglebox.setWrapping(True)
+        self.anglebox.setMaximum(359)
+        self.anglebox.setSingleStep(1)
+        self.anglebox.setProperty("value", 45)
+        self.anglebox.setObjectName("anglebox")
+        self.gridLayout.addWidget(self.anglebox, 5, 2, 1, 1)
+        self.wbox = QtWidgets.QSpinBox(self.layoutWidget)
+        self.wbox.setMinimum(-1000)
+        self.wbox.setMaximum(1000)
+        self.wbox.setObjectName("wbox")
+        self.gridLayout.addWidget(self.wbox, 1, 2, 1, 1)
+        self.windbox = QtWidgets.QSpinBox(self.layoutWidget)
+        self.windbox.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.windbox.setWrapping(True)
+        self.windbox.setAccelerated(False)
+        self.windbox.setMinimum(-30)
+        self.windbox.setMaximum(30)
+        self.windbox.setObjectName("windbox")
+        self.gridLayout.addWidget(self.windbox, 3, 2, 1, 1)
+        self.radBoom = QtWidgets.QRadioButton(self.layoutWidget)
+        self.radBoom.setObjectName("radBoom")
+        self.gridLayout.addWidget(self.radBoom, 9, 3, 1, 1)
+        self.label_2 = QtWidgets.QLabel(self.layoutWidget)
+        self.label_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_2.setObjectName("label_2")
+        self.gridLayout.addWidget(self.label_2, 3, 1, 1, 1)
+        self.hbox = QtWidgets.QSpinBox(self.layoutWidget)
+        self.hbox.setMinimum(-1000)
+        self.hbox.setMaximum(1000)
+        self.hbox.setObjectName("hbox")
+        self.gridLayout.addWidget(self.hbox, 2, 2, 1, 1)
+        self.label_5 = QtWidgets.QLabel(self.layoutWidget)
+        self.label_5.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_5.setObjectName("label_5")
+        self.gridLayout.addWidget(self.label_5, 2, 1, 1, 1)
+        self.label = QtWidgets.QLabel(self.layoutWidget)
+        self.label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label.setObjectName("label")
+        self.gridLayout.addWidget(self.label, 1, 1, 1, 1)
+        self.radBigHover = QtWidgets.QRadioButton(self.layoutWidget)
+        self.radBigHover.setObjectName("radBigHover")
+        self.gridLayout.addWidget(self.radBigHover, 5, 3, 1, 1)
+        self.radDig = QtWidgets.QRadioButton(self.layoutWidget)
+        self.radDig.setObjectName("radDig")
+        self.gridLayout.addWidget(self.radDig, 7, 3, 1, 1)
+        self.lineEdit = QtWidgets.QLineEdit(self.layoutWidget)
+        self.lineEdit.setStyleSheet("color:rgb(85, 87, 83)")
+        self.lineEdit.setReadOnly(True)
+        self.lineEdit.setObjectName("lineEdit")
+        self.gridLayout.addWidget(self.lineEdit, 9, 0, 1, 2)
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.actionExit = QtWidgets.QAction(MainWindow)
+        self.actionExit.setObjectName("actionExit")
 
-def deg(angleR):
-    return angleR*180/pi
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-def cot(theta):
-    return 1/tan(theta)
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "Aim Assistant v2"))
+        self.radNorm.setText(_translate("MainWindow", "&Normal"))
+        self.vbox.setPlaceholderText(_translate("MainWindow", "Power"))
+        self.label_4.setText(_translate("MainWindow", "Shot Type:"))
+        self.radHover.setText(_translate("MainWindow", "&Hover (Post hang only)"))
+        self.acq_btn.setText(_translate("MainWindow", "&ACK"))
+        self.label_3.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-style:italic;\">θ</span>(0-359):</p></body></html>"))
+        self.calc_btn.setText(_translate("MainWindow", "&Calc"))
+        self.flipwind_btn.setText(_translate("MainWindow", "&Invert Wind"))
+        self.radBoom.setText(_translate("MainWindow", "&Boomerang"))
+        self.label_2.setText(_translate("MainWindow", "Wind:"))
+        self.label_5.setText(_translate("MainWindow", "Height:"))
+        self.label.setText(_translate("MainWindow", "Width:"))
+        self.radBigHover.setText(_translate("MainWindow", "&Big Hover"))
+        self.radDig.setText(_translate("MainWindow", "&Tunneler"))
+        self.lineEdit.setText(_translate("MainWindow", "07 28 90 24 00 14 10 00 00"))
+        self.actionExit.setText(_translate("MainWindow", "Exit"))
 
-def quadform(a, b, c):
-    # Quadratic formula
-    rad = b*b-4*a*c
-    if rad<0 or a==0:
-        return [-1, -1]
-    sqf = sqrt(rad)
-    return [(-b+sqf)/(2*a),(-b-sqf)/(2*a)]
-
-'''
-Bonus to Gameconquerors:
-See PowerAngleCircle.as for reference. Allow first turn shot display:
-::push bunch of properties; pushbyte 0; ifne ofs0056;
-07 28 90 24 00 14 10 00 00
-turn -1?
-07 28 90 24 ff 14 10 00 00
-'''
-class MW(QMainWindow, GUIv2.Ui_MainWindow):
-    def __init__(self, parent=None):
-        super(MW, self).__init__(parent)
-        self.setupUi(self)
-        self.initwin()
-
-    def initwin(self):
-        # First turn estimator:
-        ftemap = QPixmap("./estimator.png")
-        ftelabel = QLabel()
-        ftelabel.setPixmap(ftemap)
-        self.statusBar().addWidget(ftelabel)
-        ftelabel.setAlignment(Qt.AlignBottom)
-        
-        self.move(50, 50)
-
-        self.recalc_btn.clicked.connect(self.solve_tank)
-        self.flipwind_btn.clicked.connect(self.invert)
-        self.self_btn.clicked.connect(self.findself)
-        self.target_btn.clicked.connect(self.findtarget)
-
-    def findself(self):
-        mouseno = Aux.getdevicelist("Logitech")[0][0]
-        if not mouseno:
-            print("Device error:")
-            sys.exit(-1)
-
-        Mouse.clickwait(mouseno, 1)
-        x, y = Mouse.getmousepos()
-        self.selfxbox.setValue(x)
-        self.selfybox.setValue(y)
-        self.changeACK()
-
-    def findtarget(self):
-        mouseno = Aux.getdevicelist("Logitech")[0][0]
-        if not mouseno:
-            print("Device error:")
-            sys.exit(-1)
-
-        Mouse.clickwait(mouseno, 1)
-        x, y = Mouse.getmousepos()
-        self.targetxbox.setValue(x)
-        self.targetybox.setValue(y)
-        self.changeACK()
-
-    def changeACK(self):
-        Winman.focuson("Aim Assistant v2")
-        self.wbox.setValue(self.targetxbox.value() - self.selfxbox.value())
-        self.hbox.setValue(self.selfybox.value() - self.targetybox.value())
-        self.solve_tank()
-
-    def getclickloc(self):
-        pass
-
-    def invert(self):
-        # self.radNorm.setChecked(True)
-        self.windbox.setValue(-self.windbox.value())
-
-    def solve_tank(self):
-        # Sanity check.
-        shotstring=""
-
-        # Earth:
-        gc = 9.529745042492918
-        wf = 0.08173443651742651    # wind
-        # hover:
-        hc = 3.660218073939021*int(self.radHover.isChecked())
-        if(hc!=0):
-            shotstring = "(HOVER)"
-        # boomer:
-        bc = 0.07690605021520115*int(self.radBoom.isChecked())
-        if(bc!=0):
-            shotstring = "(BOOMERANG)"
-        
-        v_0 = None
-        
-
-        dx = self.wbox.value()
-        dy = self.hbox.value()
-        theta = self.anglebox.value()
-        if self.radDig.isChecked():
-            theta = -theta+360
-            dy = -dy
-            shotstring="(TUNNELER)"
-        theta = rad(theta)
-        w = self.windbox.value()
-        # hang = int(self.radHover.isChecked())
-            
-        flags = ""
-        
-        # Solve these equations:
-        # x=v_0*cos(theta)*t
-        # Other x terms:
-        #   Hover:     hc*v_0*cos(theta)
-        #   Wind:      .5*wf*w*(t**2)
-        #   Boomer:    -.5*bc*v_0*cos(theta)*(t**2)
-        
-        # y=v_0*sin(theta)*t-1/2*gc*(t**2)
-        if v_0 is None:
-            diff = 20
-            vat = -1
-            for n in range(1,111):
-                t = quadform(gc/2, -n*sin(theta), dy)[0]
-                # if t<0:
-                #     continue
-                x = n*cos(theta)*t + .5*wf*w*t**2 + hc*n*cos(theta) - .5*bc*n*cos(theta)*t**2
-                # print(fabs(x-dx))
-                if fabs(x-dx) < fabs(diff):
-                    # Debug:
-                    # print(str(n)+":\t", round(x), round(dx), round(fabs(dx-x)))
-                    diff = dx-x
-                    vat = n
-            catstr = ""
-            if(vat > 100 or diff > 5):
-                catstr = "!"
-            self.vbox.setText(catstr + str(round(vat,0))+","+str(round(diff,1))+"px" + catstr)
-            if vat<0:
-                call(["notify-send", "Error:", "Bad Value"])
-            else:
-                call(["notify-send", "Power:", str(round(vat,0))+catstr+" "+shotstring])
-                
-        else:
-            print("Error. Broken.")
-            self.vbox.setText(str(-1.0))
-
-    def keyPressEvent(self, e):
-        if e.key() == Qt.Key_Escape or e.key() == Qt.Key_Q:
-            self.close()
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    Mainwin = MW()
-    Mainwin.show()
-    sys.exit(app.exec_())
