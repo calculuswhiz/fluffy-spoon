@@ -192,9 +192,6 @@ class AimAssist(QWidget):
             shotstring="(TUNNELER)"
         theta = rad(theta)
         w = self.windbox.value()
-        # hang = int(self.radHover.isChecked())
-            
-        flags = ""
         
         # Solve these equations:
         # x=v_0*cos(theta)*t
